@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div id="heading">Multipler Timers App</div>
+    </header>
+    <main>
+      <div id="timer-top-section">
+        <div class="timer-left">Set Time:</div>
+        <div class="timer-top-center">
+          <div class="hour-input">
+            <input type="number" min="0" max="24" id="hour-input">
+            :           
+          </div>
+          <div class="minutes-input"><input type="number" min="0" max="60" id="minutes-input">:</div>
+          <div class="seconds-input"><input type="number" min="0" max="60" id="seconds-input"></div>
+        </div>
+        <div class="timer-right">
+          <button id="set-btn">Set</button>
+        </div>
+      </div>
+      <div id="current-timers">Current Timers</div>
+      <div id="timer-section">
+        <div class="timer-block">
+          <div class="timer-left">Time Left:</div>
+          <div class="timer-center">
+            <div class="hour">12:</div>
+            <div class="minutes">22:</div>
+            <div class="seconds">44</div>
+          </div>
+          <div class="timer-right">
+            <button>Delete</button>
+          </div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-left">Time Left:</div>
+          <div class="timer-center">
+            <div class="hour">12:</div>
+            <div class="minutes">22:</div>
+            <div class="seconds">44</div>
+          </div>
+          <div class="timer-right">
+            <button>Delete</button>
+          </div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-left">Time Left:</div>
+          <div class="timer-center">
+            <div class="hour">12:</div>
+            <div class="minutes">22:</div>
+            <div class="seconds">44</div>
+          </div>
+          <div class="timer-right">
+            <button>Delete</button>
+          </div>
+        </div>
+
+        <!-- timer stop toggle -->
+        <div class="timer-stop-block">
+          <div class="timer-stop-center">
+                Timer is Up!
+          </div>
+          <div class="timer-stop-right">
+            <button>Stop</button>
+          </div>
+        </div>
+        
+       
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
