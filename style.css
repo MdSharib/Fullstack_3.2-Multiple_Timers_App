@@ -66,15 +66,28 @@ header #heading{
     background-color: #34344A;
 }
 
-
-
-
-.timer-right{
+.timer-up-right{
     width: 15%;
     border-radius: 15px;
 }
-.timer-right button{
+.timer-up-right button{
     width: 100%;
+    height: 30px;
+    background-color: #F0F757;
+    border-radius: 15px;
+    color: black;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+.timer-block{
+    width: 15%;
+    border-radius: 15px;
+}
+.timer-block button{
+    width: 17%;
     height: 30px;
     background-color: #F0F757;
     border-radius: 15px;
@@ -121,8 +134,8 @@ header #heading{
 
 /* timer stop class section */
 
-.timer-stop-block{
-    display: flex;
+#timer-stop-block{
+    display: none;
     width: 100%;
     justify-content: space-around;
     align-items: center;

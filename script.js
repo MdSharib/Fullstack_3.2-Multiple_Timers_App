@@ -1,122 +1,101 @@
+const startTimerBtn = document.getElementById("set-btn");
+const activeTimersDisplay = document.getElementById("timer-output");
+const timerEndDisplay = document.getElementById("timer-stop-block");
+const alertSound = document.getElementById("alertSound");
+const paragraph = document.getElementById("para");
 
-const setBtn = document.getElementById("set-btn");
-const timerOutput = document.getElementById("timer-output");
-const deleteBtn = document.getElementsByClassName("delete-btn")[0];
+let timers = [];
 
-let timer = [];
-let interval = null;
+startTimerBtn.addEventListener("click", () => {
+  paragraph.style.display = "none";
+  const hours = parseInt(document.getElementById("hour-input").value);
+  const minutes = parseInt(document.getElementById("minutes-input").value);
+  const seconds = parseInt(document.getElementById("seconds-input").value);
 
-const setBtnHandler = () => {
-    const userHour = document.getElementById("hour-input").value;
-const userMinutes = document.getElementById("minutes-input").value;
-const userSeconds = document.getElementById("seconds-input").value;
-let hour = document.getElementsByClassName("hour");
-// validation
-    if(userHour < 0 || userHour > 24) {
-        alert("please enter valid 24 hour format")
-        return;
+  if (!isNaN(hours) || !isNaN(minutes) || !isNaN(seconds)) {
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    if (totalSeconds > 0) {
+      createTimer(totalSeconds);
     }
-    if(userMinutes < 0 || userMinutes > 60) {
-        alert("please enter valid minute from 0 to 60")
-        return;
-    }
-    if(userSeconds < 0 || userSeconds > 60) {
-        alert("please enter valid second from 0 to 60")
-        return;
-    }
+  }
+});
 
-    let userTimer = {
-        hour: userHour,
-        minutes: userMinutes,
-        seconds: userSeconds,
-    }
-    timer.push(userTimer);
-    userHour.value = "";
-    userMinutes.value = "";
-    userSeconds.value = "";
-    setTimer(userSeconds, userMinutes, userHour );
-
+/* formatting time*/
+function formatTime(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}:${String(remainingSeconds).padStart(2, "0")}`;
 }
 
-const countTimer = (seconds, mins, hrs) => {
-    // seconds--;
-    // let hrs = Math.floor(seconds/ 3600);
-    // let mins = Math.floor((seconds -(hrs * 3600)) / 60);
-    // let sec = seconds % 60;
-    
-    // if(sec < 10) sec = '0' + sec;
-    // if(mins < 10) mins = '0' + mins;
-    // if(hrs < 10) hrs = '0' + hrs;
-    if(seconds < 10) seconds = '0' + seconds;
-    if(mins < 10) mins = '0' + mins;
-    if(hrs < 10) hrs = '0' + hrs;
+//updating Time
+function updateTimersDisplay() {
+  activeTimersDisplay.innerHTML = "";
 
-    
-    console.log(deleteBtn);
+  timers.forEach((timer, index) => {
+    const timerDiv = document.createElement("div");
+    timerDiv.className = "timer-block";
+    timerDiv.innerHTML = `
+    <div>
+          <p style="color: white; font-size: 40px; font-size: 18px; background-color: #34344A">Time Left :</p>
+        </div>
+      <div class=run-time>  
+    <span class="timer-center">${formatTime(timer.remainingTime)}</span>
+      </div>
+      <button class="stop-timer-btn" data-index="${index}">Stop</button>
+    `;
 
-
-    timerOutput.innerHTML = `<div class="timer-block">
-    <div class="timer-left">Time Left:</div>
-    <div class="timer-center" >
-      <div class="hour">${hrs}</div>
-      <div class="minutes">${mins}</div>
-      <div class="seconds">${seconds}</div>
-    </div>
-    <div class="timer-right">
-      <button class="delete-btn">Delete</button>
-    </div>
-  </div>
-    `
-    console.log(`${hrs} ${mins} ${seconds}`);
+    activeTimersDisplay.appendChild(timerDiv);
+  });
 }
 
+//Play Alert Audio
+function playAlertSound() {
+  alertSound.currentTime = 0; 
+  alertSound.play();
+}
 
-const setTimer = (seconds, minutes, hours) => {
+function stopTimer(index) {
+  clearInterval(timers[index].intervalId);
+  timers[index].intervalId = null; 
+  updateTimersDisplay();
+}
 
-    if(interval){
-        return;
+document.addEventListener("click", (event) => {
+  if (event.target.classList.contains("stop-timer-btn")) {
+    const index = parseInt(event.target.dataset.index);
+    stopTimer(index);
+  }
+});
+
+function createTimer(totalSeconds) {
+  const timer = {
+    remainingTime: totalSeconds,
+    intervalId: null,
+  };
+
+  timer.intervalId = setInterval(() => {
+    timer.remainingTime--;
+
+    if (timer.remainingTime <= 0) {
+      clearInterval(timer.intervalId);
+      timerEndDisplay.style.display = "flex";
+      playAlertSound();
+      setTimeout(() => {
+        activeTimersDisplay.style.display = "none";
+      }, 2000);
+      setTimeout(() => {
+        timerEndDisplay.style.display = "none";
+        
+      }, 2000);
     }
 
-    interval = setInterval(() => {
-        // seconds--;
-        if(minutes == 0 && seconds == 0 && hours == 0){
-            clearInterval(interval);
-            interval = null;
-            return;
-        }else{
-            if(seconds !== 0){
-                seconds--;
-            }else{
-                if(minutes !== 0){
-                    minutes--;
-                    seconds = 60;
-                }else if(hours !== 0){   
-                        hours--;
-                        minutes = 60;
-                }else if(hours === 0 && seconds === 0){
-                    clearInterval(interval);
-                }
-            }
-        }
-       
+    updateTimersDisplay();
+  }, 1000);
 
-        countTimer(seconds, minutes, hours);
-    }, 1000);
+  timers.push(timer);
+  updateTimersDisplay();
 }
-
-
-const deleteBtnHandler = () => {
-    console.log("delete clicked")
-    clearInterval(interval);
-    interval = null;
-}
-
-
-
-setBtn.addEventListener("click", setBtnHandler);
-deleteBtn.addEventListener('click', deleteBtnHandler);
-
-
-
-
-
