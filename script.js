@@ -40,12 +40,13 @@ function updateTimersDisplay() {
     timerDiv.className = "timer-block";
     timerDiv.innerHTML = `
     <div>
-          <p style="color: white; font-size: 40px; font-size: 18px; background-color: #34344A">Time Left :</p>
+          <p style="color: white; font-size: 22px; background-color: #34344A">Time Left :</p>
         </div>
       <div class=run-time>  
-    <span class="timer-center">${formatTime(timer.remainingTime)}</span>
+    <span class="timer-center" style="font-size: 58px;">${formatTime(timer.remainingTime)}</span>
       </div>
       <button class="stop-timer-btn" data-index="${index}">Stop</button>
+      
     `;
 
     activeTimersDisplay.appendChild(timerDiv);
@@ -82,6 +83,7 @@ function createTimer(totalSeconds) {
 
     if (timer.remainingTime <= 0) {
       clearInterval(timer.intervalId);
+    //   timerEndDisplay.innerText = "Timer Is Up !";
       timerEndDisplay.style.display = "flex";
       playAlertSound();
       setTimeout(() => {
@@ -89,7 +91,6 @@ function createTimer(totalSeconds) {
       }, 2000);
       setTimeout(() => {
         timerEndDisplay.style.display = "none";
-        
       }, 2000);
     }
 
