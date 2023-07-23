@@ -90,7 +90,7 @@ function createTimer(totalSeconds) {
     if (timer.remainingTime <= 0) {
       clearInterval(timer.intervalId);
       timerEndDisplay.style.display = "flex";
-      activeTimersDisplay.style.display = "none";
+      // activeTimersDisplay.style.display = "none";
       playAlertSound();
       // setTimeout(() => {
       //   activeTimersDisplay.style.display = "none";
