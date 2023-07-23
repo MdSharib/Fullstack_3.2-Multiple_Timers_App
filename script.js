@@ -1,7 +1,7 @@
 const startTimerBtn = document.getElementById("set-btn");
 const activeTimersDisplay = document.getElementById("timer-output");
 const timerEndDisplay = document.getElementById("timer-stop-block");
-const alertSound = document.getElementById("alertSound");
+
 const paragraph = document.getElementById("para");
 
 let timers = [];
@@ -47,6 +47,7 @@ function updateTimersDisplay() {
       </div>
       <button class="stop-timer-btn" data-index="${index}">Stop</button>
       
+      
     `;
 
     activeTimersDisplay.appendChild(timerDiv);
@@ -55,8 +56,13 @@ function updateTimersDisplay() {
 
 //Play Alert Audio
 function playAlertSound() {
-  alertSound.currentTime = 0; 
-  alertSound.play();
+  let audio = new Audio("./audio.wav");
+  audio.currentTime = 0; 
+  audio.play();
+  console.log("audio run")
+  // const alertSound = document.getElementById("alertSound");
+  // alertSound.currentTime = 0; 
+  // alertSound.play();
 }
 
 function stopTimer(index) {
@@ -83,20 +89,20 @@ function createTimer(totalSeconds) {
 
     if (timer.remainingTime <= 0) {
       clearInterval(timer.intervalId);
-    //   timerEndDisplay.innerText = "Timer Is Up !";
       timerEndDisplay.style.display = "flex";
+      activeTimersDisplay.style.display = "none";
       playAlertSound();
-      setTimeout(() => {
-        activeTimersDisplay.style.display = "none";
-      }, 2000);
+      // setTimeout(() => {
+      //   activeTimersDisplay.style.display = "none";
+      // }, 2000);
       setTimeout(() => {
         timerEndDisplay.style.display = "none";
-      }, 2000);
+      }, 3000);
     }
 
     updateTimersDisplay();
   }, 1000);
-
+  // playAlertSound();
   timers.push(timer);
   updateTimersDisplay();
 }
